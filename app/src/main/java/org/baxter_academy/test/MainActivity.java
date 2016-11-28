@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity {
 
         /** ASSIGN / LOAD RESOURCES **/
         // assigns classifier
-        InputStream classifier = getResources().openRawResource(R.raw.randomforest);
+        InputStream classifier = getResources().openRawResource(R.raw.randomforestbinarycfscsc20);
 
-        Classifier cls = null; // TO-DO study SerializationHelper
+        Classifier cls = null; // TODO study SerializationHelper
         try {
             cls = (Classifier) weka.core.SerializationHelper.read(classifier);
         } catch (Exception e) {
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // assigns test data
-        Reader reader = new InputStreamReader(getResources().openRawResource(R.raw.testunlabeled));
+        Reader reader = new InputStreamReader(getResources().openRawResource(R.raw.testunlabeledbinarycfs));
 
         // load unlabeled data
         Instances unlabeled = null;
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         /** SAVE LABELED INSTANCE **/
-        String FILENAME = "classification.txt";
+        String FILENAME = "classification.txt"; // returns as read only fs!
         BufferedWriter writer = null;
 
         // opens file for writing
@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
         // writes to file
         try {
+            System.out.println(labeled); // debug
             writer.write(labeled.toString());
             writer.newLine();
             writer.flush();
