@@ -1,10 +1,14 @@
 package org.baxter_academy.test;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -64,9 +68,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         /** SAVE LABELED INSTANCE **/
-        String FILENAME = "classification.txt"; // returns as read only fs!
+        String FILENAME = "classification"; // returns as read only fs!
         BufferedWriter writer = null;
-
+        
+        
         // opens file for writing
         try {
             writer = new BufferedWriter(
@@ -76,9 +81,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // writes to file
+        String toWrite = labeled.toString();
         try {
             System.out.println(labeled); // debug
-            writer.write(labeled.toString());
+            //TextView text = null;
+            //text.setText(toWrite);
+            writer.write(toWrite);
             writer.newLine();
             writer.flush();
             writer.close();
@@ -86,5 +94,26 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+/**
+        FileOutputStream writer = null;
+
+        // opens file for writing
+        try {
+            writer = openFileOutput(FILENAME, Context.MODE_PRIVATE);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // writes to file
+        try {
+            System.out.println(labeled); // debug
+            writer.write(labeled);
+            writer.newLine();
+            writer.flush();
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+ **/
     }
 }
