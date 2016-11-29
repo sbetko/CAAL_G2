@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,6 +18,9 @@ import java.io.Reader;
 
 import weka.classifiers.Classifier;
 import weka.core.Instances;
+
+import static android.R.attr.key;
+import static org.baxter_academy.test.R.id.showResults;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,8 +40,17 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        // assigns test data
-        Reader reader = new InputStreamReader(getResources().openRawResource(R.raw.testunlabeledbinarycfs));
+        /** Does not work
+        // assign and load labeled data
+        InputStreamReader labeledData = new InputStreamReader(
+                getResources().openRawResource(R.raw.testlabeledbinarycfs)
+        );
+        BufferedReader labeledDataReader = new BufferedReader(labeledData);
+        **/
+        // assign unlabeled data
+        Reader reader = new InputStreamReader(
+                getResources().openRawResource(R.raw.testunlabeledbinarycfs)
+        );
 
         // load unlabeled data
         Instances unlabeled = null;
@@ -85,11 +98,8 @@ public class MainActivity extends AppCompatActivity {
 
         // writes to file
         String toWrite = labeled.toString();
-        assert writer != null;
         try {
             System.out.println(labeled); // debug
-            //TextView text = null;
-            //text.setText(toWrite);
             if (writer != null) {
                 writer.write(toWrite);
                 writer.newLine();
@@ -97,32 +107,27 @@ public class MainActivity extends AppCompatActivity {
                 writer.close();
                 System.out.println("file reference is not null");
             } else {
-                System.out.println("working as not intended");
+                System.out.println("file reference is null");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-/**
-        FileOutputStream writer = null;
-
-        // opens file for writing
-        try {
-            writer = openFileOutput(FILENAME, Context.MODE_PRIVATE);
-        } catch (IOException e) {
-            e.printStackTrace();
+        /** DISPLAY **/
+        /** does not work //TODO add TextView for labeled data (for comparison purposes)
+        // displays test data
+        String line = labeledDataReader.readLine();
+        String labeledDataString;
+        while (line != null) {
+            line = labeledDataReader.readLine();
+            labeledDataString += line;
         }
+         TextView showTestData = (TextView) findViewById(showTestData);
+         showTestData.setText();
+        **/
 
-        // writes to file
-        try {
-            System.out.println(labeled); // debug
-            writer.write(labeled);
-            writer.newLine();
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
- **/
+        // displays prediction
+        TextView showResults = (TextView) findViewById(R.id.showResults);
+        showResults.setText(toWrite);
     }
 }
