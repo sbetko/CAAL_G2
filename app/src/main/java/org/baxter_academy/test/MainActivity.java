@@ -69,27 +69,36 @@ public class MainActivity extends AppCompatActivity {
 
         /** SAVE LABELED INSTANCE **/
         String FILENAME = "classification"; // returns as read only fs!
+        File file = new File(FILENAME);
         BufferedWriter writer = null;
         
         
         // opens file for writing
         try {
             writer = new BufferedWriter(
-                    new FileWriter(FILENAME));
+                    new FileWriter(new File(getFilesDir(), FILENAME)
+                    ));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         // writes to file
         String toWrite = labeled.toString();
+        assert writer != null;
         try {
             System.out.println(labeled); // debug
             //TextView text = null;
             //text.setText(toWrite);
-            writer.write(toWrite);
-            writer.newLine();
-            writer.flush();
-            writer.close();
+            if (writer != null) {
+                writer.write(toWrite);
+                writer.newLine();
+                writer.flush();
+                writer.close();
+                System.out.println("file reference is not null");
+            } else {
+                System.out.println("working as not intended");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
