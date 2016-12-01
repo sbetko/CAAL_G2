@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         /** SAVE LABELED INSTANCE **/
-        String FILENAME = "classification"; // returns as read only fs!
+        String FILENAME = "classification";
         File file = new File(FILENAME);
         BufferedWriter writer = null;
         
